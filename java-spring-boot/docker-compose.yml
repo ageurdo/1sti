@@ -1,0 +1,14 @@
+version: '3.5'
+services:
+  database:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: RootPassword
+      MYSQL_DATABASE: 1sti
+      MYSQL_USER: MainUser
+      MYSQL_PASSWORD: MainPassword
+    volumes: [db-volume:/var/lib/mysql]
+volumes:
+  db-volume:
