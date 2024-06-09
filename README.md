@@ -57,18 +57,18 @@
     *   Definir o modelo de dados para a entidade Usuário
         
     *   Criar as tabelas necessárias no banco de dados MySQL
-        
-*   **[] 3: Implementação da camada de segurança**
-    
-    *   Implementar a camada de segurança utilizando o padrão de projeto JWT
-        
-    *   Criar endpoints para autenticação e autorização
-        
-*   **[] 4: Implementação da camada de persistência**
+              
+*   **[] 3: Implementação da camada de persistência**
     
     *   Implementar a camada de persistência utilizando o banco de dados relacional MySQL
         
     *   Criar endpoints para CRUD (Create, Read, Update, Delete) de usuários
+
+*   **[] 4: Implementação da camada de segurança**
+    
+    *   Implementar a camada de segurança utilizando o padrão de projeto JWT
+        
+    *   Criar endpoints para autenticação e autorização
         
 *   **[] 5: Implementação da lógica de negócios**
     
