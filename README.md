@@ -46,19 +46,19 @@
 
 **Checkpoints**
 
-*   **[x] 1: Criação do repositório Git**
+*   **[X] 1: Criação do repositório Git**
     
     *   Criar um repositório Git público para o desafio
         
     *   Adicionar o arquivo README.md com as instruções e requisitos do desafio
         
-*   **[] 2: Definição do modelo de dados**
+*   **[X] 2: Definição do modelo de dados**
     
     *   Definir o modelo de dados para a entidade Usuário
         
     *   Criar as tabelas necessárias no banco de dados MySQL
               
-*   **[] 3: Implementação da camada de persistência**
+*   **[X] 3: Implementação da camada de persistência**
     
     *   Implementar a camada de persistência utilizando o banco de dados relacional MySQL
         
