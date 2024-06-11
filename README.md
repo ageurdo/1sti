@@ -64,17 +64,28 @@
         
     *   Criar endpoints para CRUD (Create, Read, Update, Delete) de usuários
 
-*   **[] 4: Implementação da camada de segurança**
+    *   Criar endpoints para realizar operações de cadastro de usuários
+
+*   **[] 4: Implementação da lógica de negócios**
+    
+    *   Implementar a lógica de negócios para a entidade Usuário
+
+    *   Adicionar Dtos e validar rotas
+        
+    *  [x] Rota - Criar usuário;
+
+    *  [x] Rota - Atualizar senha;
+
+    *  [x] Rota - Usuário por id;
+    
+    *  [x] Rota - Todos usuários;
+
+*   **[] 5: Implementação da camada de segurança**
     
     *   Implementar a camada de segurança utilizando o padrão de projeto JWT
         
     *   Criar endpoints para autenticação e autorização
         
-*   **[] 5: Implementação da lógica de negócios**
-    
-    *   Implementar a lógica de negócios para a entidade Usuário
-        
-    *   Criar endpoints para realizar operações de cadastro de usuários
         
 *   **[] 6: Implementação de testes**
     

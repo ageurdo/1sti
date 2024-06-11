@@ -6,6 +6,7 @@ import com.ageurdo.demo_user_auth_api.web.dto.UserCreateDto;
 import com.ageurdo.demo_user_auth_api.web.dto.UserPasswordDto;
 import com.ageurdo.demo_user_auth_api.web.dto.UserResponseDto;
 import com.ageurdo.demo_user_auth_api.web.dto.mapper.UserMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class UserController {
     private final com.ageurdo.demo_user_auth_api.service.userService userService;
 
     @PostMapping
-    public ResponseEntity<UserResponseDto> create(@RequestBody UserCreateDto createDto){
+    public ResponseEntity<UserResponseDto> create(@Valid @RequestBody UserCreateDto createDto){
         User userSaved = userService.create(UserMapper.toUser(createDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(UserMapper.toDto(userSaved));
     }
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UserPasswordDto dto){
+    public ResponseEntity<Void> updatePassword(@PathVariable Long id, @Valid @RequestBody UserPasswordDto dto){
         User user = userService.changePassword(id, dto.getCurrentPassword(), dto.getNewPassword(), dto.getConfirmPassword());
         return ResponseEntity.noContent().build();
     }
@@ -45,9 +46,9 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.toListDto(users));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<User> update(@PathVariable Long id,@RequestBody User user){
-        User userSaved = userService.update(id, user);
-        return ResponseEntity.ok(userSaved);
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<User> update(@PathVariable Long id,@RequestBody User user){
+//        User userSaved = userService.update(id, user);
+//        return ResponseEntity.ok(userSaved);
+//    }
 }
