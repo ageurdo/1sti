@@ -79,6 +79,8 @@
     *  [x] Rota - Usuário por id;
     
     *  [x] Rota - Todos usuários;
+    
+    *  [x] Tratar Exceções
 
 *   **[] 5: Implementação da camada de segurança**
     

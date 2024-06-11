@@ -1,8 +1,11 @@
 package com.ageurdo.demo_user_auth_api.service;
 
 import com.ageurdo.demo_user_auth_api.entity.User;
+import com.ageurdo.demo_user_auth_api.exception.CpfUniqueViolationException;
+import com.ageurdo.demo_user_auth_api.exception.EntityNotFoundException;
 import com.ageurdo.demo_user_auth_api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,13 +19,19 @@ public class userService {
 
     @Transactional
     public User create(User user) {
-        return userRepository.save(user);
+        try {
+            return userRepository.save(user);
+        }
+        catch (DataIntegrityViolationException ex) {
+            throw new CpfUniqueViolationException(String.format("CPF {%s} já cadastrado", user.getCpf()));
+        }
+
     }
 
     @Transactional(readOnly = true)
     public User getById(Long id) {
         return userRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Usuário não encontrado")
+                () -> new EntityNotFoundException(String.format("Usuário id=%s não encontrado", id))
         );
     }
 
