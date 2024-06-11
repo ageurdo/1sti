@@ -1,5 +1,6 @@
 package com.ageurdo.demo_user_auth_api.web.dto;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
@@ -22,6 +23,8 @@ public class UserCreateDto {
     @DateTimeFormat
     private LocalDateTime dateOfBirth;
 
+    private String status;
+
     @NotBlank
     private String street;
 
@@ -43,13 +46,8 @@ public class UserCreateDto {
     @NotBlank
     private String zipCode;
 
-    @NotBlank
-    private String status;
-
-    @DateTimeFormat
     private LocalDateTime createdAt;
 
-    @NotBlank
     private String createdBy;
 
     private LocalDateTime updatedAt;
