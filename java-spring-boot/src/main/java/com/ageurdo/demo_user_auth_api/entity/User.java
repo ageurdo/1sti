@@ -18,11 +18,15 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, updatable = false)
     private String cpf;
 
-    @Column(nullable = false, length = 200)
+    @Column(length = 200)
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 25)
+    private Role role = Role.ROLE_USER;
 
     @Column(nullable = false)
     private String name;
@@ -55,10 +59,10 @@ public class User implements Serializable {
     private RecordStatus status;
 
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(nullable = false, updatable = false)
-    private String createdBy;
+    private String createdBy = "System";
 
     @Column(nullable = true)
     private LocalDateTime updatedAt;
@@ -75,6 +79,11 @@ public class User implements Serializable {
     public enum RecordStatus {
         ACTIVE,
         REMOVED
+    }
+
+    public enum Role {
+        ROLE_ADMIN,
+        ROLE_USER
     }
 
     @Override

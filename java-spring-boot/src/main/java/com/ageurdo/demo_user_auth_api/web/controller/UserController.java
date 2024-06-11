@@ -2,6 +2,10 @@ package com.ageurdo.demo_user_auth_api.web.controller;
 
 import com.ageurdo.demo_user_auth_api.entity.User;
 import com.ageurdo.demo_user_auth_api.repository.UserRepository;
+import com.ageurdo.demo_user_auth_api.web.dto.UserCreateDto;
+import com.ageurdo.demo_user_auth_api.web.dto.UserPasswordDto;
+import com.ageurdo.demo_user_auth_api.web.dto.UserResponseDto;
+import com.ageurdo.demo_user_auth_api.web.dto.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,26 +22,32 @@ public class UserController {
     private final com.ageurdo.demo_user_auth_api.service.userService userService;
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody User user){
-        User userSaved = userService.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userSaved);
+    public ResponseEntity<UserResponseDto> create(@RequestBody UserCreateDto createDto){
+        User userSaved = userService.create(UserMapper.toUser(createDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(UserMapper.toDto(userSaved));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getById(@PathVariable Long id){
+    public ResponseEntity<UserResponseDto> getById(@PathVariable Long id){
         User userFound = userService.getById(id);
-        return ResponseEntity.ok(userFound);
+        return ResponseEntity.ok(UserMapper.toDto(userFound));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<User> updatePassword(@PathVariable Long id, @RequestBody User user){
-        User userChanged = userService.changePassword(id, user.getPassword());
-        return ResponseEntity.ok(userChanged);
+    public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UserPasswordDto dto){
+        User user = userService.changePassword(id, dto.getCurrentPassword(), dto.getNewPassword(), dto.getConfirmPassword());
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAll(){
+    public ResponseEntity<List<UserResponseDto>> getAll(){
         List<User> users = userService.getAll();
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok(UserMapper.toListDto(users));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> update(@PathVariable Long id,@RequestBody User user){
+        User userSaved = userService.update(id, user);
+        return ResponseEntity.ok(userSaved);
     }
 }
