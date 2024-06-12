@@ -79,23 +79,42 @@
     *  [x] Rota - Usuário por id;
     
     *  [x] Rota - Todos usuários;
-    
-    *  [x] Tratar Exceções
 
-*   **[] 5: Implementação da camada de segurança**
+    *  [ ] Rota - Atualizar usuário;
+    
+    *  [x] Padronizar e tratar Exceções
+
+    *  [ ] Padronizar exceções de atualizar senha
+
+    **[] 5: Documentar API**
+    
+    *  [x] Adicionar SpringDoc
+        
+    *  [x] Documentar Rota - Criar usuário;
+
+    *  [x] Documentar Rota - Atualizar senha;
+
+    *  [x] Documentar Rota - Usuário por id;
+    
+    *  [ ] Documentar Rota - Todos usuários;
+    
+    *  [ ] Documentar Rota - Atualizar usuário;
+        
+
+*   **[] 6: Implementação da camada de segurança**
     
     *   Implementar a camada de segurança utilizando o padrão de projeto JWT
         
     *   Criar endpoints para autenticação e autorização
         
         
-*   **[] 6: Implementação de testes**
+*   **[] 7: Implementação de testes**
     
     *   Criar testes para a aplicação utilizando frameworks de teste adequados
         
     *   Realizar testes de unidade e integração para a aplicação
         
-*   **[] 7: Entrega do código fonte**
+*   **[] 8: Entrega do código fonte**
     
     *   Entregar o código fonte em um repositório Git público
         
