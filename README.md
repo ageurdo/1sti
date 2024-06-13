@@ -84,7 +84,10 @@
     
     *  [x] Padronizar e tratar Exceções
 
-    *  [ ] Padronizar exceções de atualizar senha
+    *  [x] Padronizar exceções de atualizar senha
+
+    *  [x] Padronizar excessão de Bad Request e Method Not Allowed...
+
 
     **[] 5: Documentar API**
     
@@ -96,9 +99,9 @@
 
     *  [x] Documentar Rota - Usuário por id;
     
-    *  [ ] Documentar Rota - Todos usuários;
+    *  [x] Documentar Rota - Todos usuários;
     
-    *  [ ] Documentar Rota - Atualizar usuário;
+    *  [x] Documentar Rota - Atualizar usuário;
         
 
 *   **[] 6: Implementação da camada de segurança**

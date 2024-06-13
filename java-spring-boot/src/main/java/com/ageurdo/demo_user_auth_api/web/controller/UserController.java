@@ -28,7 +28,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final com.ageurdo.demo_user_auth_api.service.userService userService;
 
-    @Operation(summary = "Criar um novo usuário", description = "Recurso para criar um novo usuário",
+    @Operation(summary = "Criar um novo usuário", description = "Rota para criar um novo usuário",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Recurso criado com sucesso",
                             content=@Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDto.class))),
@@ -43,9 +43,9 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(UserMapper.toDto(userSaved));
     }
 
-    @Operation(summary = "Recuperar um usuário pelo id", description = "Recuperar um usuário pelo id",
+    @Operation(summary = "Recuperar um usuário pelo id", description = "Rota para recuperar um usuário pelo id",
             responses = {
-                    @ApiResponse(responseCode = "201", description = "Recurso recuperado com sucesso",
+                    @ApiResponse(responseCode = "200", description = "Recurso recuperado com sucesso",
                             content=@Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDto.class))),
                     @ApiResponse(responseCode = "404", description = "Recurso não encontrado",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
@@ -56,9 +56,9 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.toDto(userFound));
     }
 
-    @Operation(summary = "Atualizar senha", description = "Atualizar senha",
+    @Operation(summary = "Atualizar senha", description = "Rota para atualizar senha",
             responses = {
-                    @ApiResponse(responseCode = "204", description = "Senah atualizada com sucesso",
+                    @ApiResponse(responseCode = "204", description = "Senha atualizada com sucesso",
                             content=@Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),
                     @ApiResponse(responseCode = "404", description = "Recurso não encontrado",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
@@ -71,15 +71,26 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Recuperar todos usuários", description = "Rota para recuperar todos usuários",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Recursos recuperados com sucesso",
+                            content=@Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDto.class))),
+                    @ApiResponse(responseCode = "204", description = "Nenhum usuário cadastrado",
+                            content=@Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),
+            })
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> getAll(){
         List<User> users = userService.getAll();
-        return ResponseEntity.ok(UserMapper.toListDto(users));
+        if (users.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(UserMapper.toListDto(users));
+        }
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<User> update(@PathVariable Long id,@RequestBody User user){
-//        User userSaved = userService.update(id, user);
-//        return ResponseEntity.ok(userSaved);
-//    }
+    @PutMapping("/{id}")
+    public ResponseEntity<User> update(@PathVariable Long id,@RequestBody User user){
+        User userSaved = userService.update(id, user);
+        return ResponseEntity.ok(userSaved);
+    }
 }
