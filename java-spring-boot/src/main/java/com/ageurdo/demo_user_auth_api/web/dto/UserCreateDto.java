@@ -8,7 +8,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class UserCreateDto {
     @CPF(message = "CPF Invalid")
     private String cpf;
@@ -46,15 +50,16 @@ public class UserCreateDto {
     @NotBlank
     private String zipCode;
 
-    private LocalDateTime createdAt;
+//    private LocalDateTime createdAt;
+//
+//    private String createdBy;
+//
+//    private LocalDateTime updatedAt;
+//
+//    private String updatedBy;
+//
+//    private LocalDateTime deletedAt;
+//
+//    private String deletedBy;
 
-    private String createdBy;
-
-    private LocalDateTime updatedAt;
-
-    private String updatedBy;
-
-    private LocalDateTime deletedAt;
-
-    private String deletedBy;
 }

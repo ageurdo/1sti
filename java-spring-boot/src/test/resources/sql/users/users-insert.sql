@@ -1,0 +1,2 @@
+INSERT INTO users (cpf, password, name, date_of_birth, role, street, number, complement, neighborhood, city, state, status, zip_code, created_at, created_by, updated_at, updated_by, deleted_at, deleted_by)
+VALUES ('07450156970', '12345678', 'João Silva', '1990-02-20T10:00:00','ROLE_USER', 'Rua da Praia', '456', 'Casa 2', 'Praia Grande', 'Santos', 'SP', 0, '11015-000', '2024-06-13T10:00:00', 'SQL Na Unha', null, null, null, null);

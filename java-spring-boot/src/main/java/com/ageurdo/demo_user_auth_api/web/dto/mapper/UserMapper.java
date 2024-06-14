@@ -17,13 +17,13 @@ public class  UserMapper {
         ModelMapper mapper = new ModelMapper();
         User user = mapper.map(createDto, User.class);
 
-        if (createDto.getCreatedAt() == null) {
+//        if (createDto.getCreatedAt() == null) {
             user.setCreatedAt(LocalDateTime.now());
-        }
+//        }
 
-        if (createDto.getCreatedBy() == null) {
+//        if (createDto.getCreatedBy() == null) {
             user.setCreatedBy("System");
-        }
+//        }
 
         if (createDto.getStatus() == null) {
             user.setStatus(User.RecordStatus.ACTIVE);

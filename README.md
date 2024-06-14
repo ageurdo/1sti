@@ -89,7 +89,7 @@
     *  [x] Padronizar excessão de Bad Request e Method Not Allowed...
 
 
-    **[] 5: Documentar API**
+*   **[] 5: Documentar API**
     
     *  [x] Adicionar SpringDoc
         
@@ -103,19 +103,30 @@
     
     *  [x] Documentar Rota - Atualizar usuário;
         
+*   **[] 6: Implementação de testes**
+    
+    *   Criar testes para a aplicação utilizando frameworks de teste adequados
+        
+    *   Realizar testes ponta a ponta nas rotas abaixo
+     
+    *  [x] CreateUser, CPF duplicado, CPF válido; Senha vazia, Senha inferior ou superior a 8 digitos
+        
+    *  [x] UpdatePassowordenha, validar se senha é diferente de 8 digitos com id existente e não existente
 
-*   **[] 6: Implementação da camada de segurança**
+    *  [x] GetUserById, com id existente e não existente;
+    
+    *  [ ] GetAll;
+    
+    *  [ ] UpdateUser;
+
+
+*   **[] 7: Implementação da camada de segurança**
     
     *   Implementar a camada de segurança utilizando o padrão de projeto JWT
         
     *   Criar endpoints para autenticação e autorização
         
-        
-*   **[] 7: Implementação de testes**
-    
-    *   Criar testes para a aplicação utilizando frameworks de teste adequados
-        
-    *   Realizar testes de unidade e integração para a aplicação
+
         
 *   **[] 8: Entrega do código fonte**
     
