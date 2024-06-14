@@ -54,22 +54,6 @@ public class userService {
         }
     }
 
-    private void validateCurrentPassword(User user, String currentPassword) {
-        if (!user.getPassword().equals(currentPassword)) {
-            throw new PasswordException("Sua senha está incorreta");
-        }
-    }
-
-    private void validateNewPassword(Long id, String newPassword, String confirmPassword) {
-        if (!newPassword.equals(confirmPassword)) {
-            throw new PasswordException("Nova senha não é igual a confirmação de senha");
-        }
-
-        if (newPassword.equals(getById(id).getPassword())) {
-            throw new PasswordException("Escolha uma senha diferente da atual");
-        }
-    }
-
     @Transactional(readOnly = true)
     public List<User> getAll() {
         return userRepository.findAll();
@@ -79,6 +63,7 @@ public class userService {
     public User update(Long id, User user) {
         try {
             User userFound = getById(id);
+
             userFound.setName(user.getName());
             userFound.setDateOfBirth(user.getDateOfBirth());
             userFound.setStreet(user.getStreet());
@@ -91,13 +76,35 @@ public class userService {
             userFound.setUpdatedAt(LocalDateTime.now());
             userFound.setUpdatedBy("Usuário que virá no request");
             return userFound;
-        }
 
-        catch (DataIntegrityViolationException ex) {
+        } catch (DataIntegrityViolationException ex) {
             throw new RuntimeException("Erro ao alterar dados do usuário");
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage(), e);
         }
 
 
 
+    }
+
+    @Transactional
+    public void deleteById(Long id) {
+        User user = getById(id);
+        userRepository.delete(user);
+    }
+
+    private void validateCurrentPassword(User user, String currentPassword) {
+        if (!user.getPassword().equals(currentPassword)) {
+            throw new PasswordException("Sua senha está incorreta");
+        }
+    }
+    private void validateNewPassword(Long id, String newPassword, String confirmPassword) {
+        if (!newPassword.equals(confirmPassword)) {
+            throw new PasswordException("Nova senha não é igual a confirmação de senha");
+        }
+
+        if (newPassword.equals(getById(id).getPassword())) {
+            throw new PasswordException("Escolha uma senha diferente da atual");
+        }
     }
 }

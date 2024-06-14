@@ -1,8 +1,10 @@
 package com.ageurdo.demo_user_auth_api;
 
+import com.ageurdo.demo_user_auth_api.entity.User;
 import com.ageurdo.demo_user_auth_api.web.dto.UserCreateDto;
 import com.ageurdo.demo_user_auth_api.web.dto.UserPasswordDto;
 import com.ageurdo.demo_user_auth_api.web.dto.UserResponseDto;
+import com.ageurdo.demo_user_auth_api.web.dto.UserUpdateDto;
 import com.ageurdo.demo_user_auth_api.web.exception.ErrorMessage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(scripts = "/sql/users/users-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
@@ -507,6 +510,190 @@ public class UserIT {
 
 
 
+    }
+
+    @Test
+    public void updateUser_WithValidData_ReturnUserWithStatusCode200(){
+        // First insert one user
+        UserResponseDto userCreatedForTest = testClient
+                .post()
+                .uri("/api/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(new UserCreateDto(
+                        "18954246079",
+                        "87654321",
+                        "João Silva",
+                        LocalDateTime.parse("1990-02-20T10:00:00"),
+                        null,
+                        "Rua da Praia",
+                        "456",
+                        "Casa 2",
+                        "Praia Grande",
+                        "Santos",
+                        "SP",
+                        "11015-000"
+                ))
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(UserResponseDto.class)
+                .returnResult().getResponseBody();
+
+        // Save Id to Compare in validations below
+        Long userId = userCreatedForTest.getId();
+
+        UserUpdateDto userToUpdate = new UserUpdateDto(
+                "João Silva Updated",
+                LocalDateTime.parse("1990-02-20T10:00:00"),
+                "Rua da Praia Updated",
+                "456",
+                "Casa 2 Updated",
+                "Praia Grande Updated",
+                "Santos Updated",
+                "SP Updated",
+                "11015-000 Updated"
+        );
+
+        UserResponseDto responseBody = testClient
+                .put()
+                .uri("/api/users/" + userId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(userToUpdate)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(UserResponseDto.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(responseBody.getId()).isEqualTo(userId);
+        org.assertj.core.api.Assertions.assertThat(responseBody.getName()).isEqualTo("João Silva Updated");
+    }
+
+    @Test
+    public void updateUser_WithNonExistentId_ReturnErrorMessageWithStatusCode404(){
+        ErrorMessage responseBody = testClient
+                .put()
+                .uri("/api/users/0")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(new UserUpdateDto(
+                        "João Silva Updated",
+                        LocalDateTime.parse("1990-02-20T10:00:00"),
+                        "Rua da Praia Updated",
+                        "456",
+                        "Casa 2 Updated",
+                        "Praia Grande Updated",
+                        "Santos Updated",
+                        "SP Updated",
+                        "11015-000 Updated"
+                ))
+                .exchange()
+                .expectStatus().isNotFound()
+                .expectBody(ErrorMessage.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(404);
+    }
+
+    @Test
+    public void deleteUser_WithValidData_ReturnUserWithStatusCode200(){
+        // First insert one user
+        UserResponseDto userCreatedForTest = testClient
+                .post()
+                .uri("/api/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(new UserCreateDto(
+                        "18954246079",
+                        "87654321",
+                        "João Silva",
+                        LocalDateTime.parse("1990-02-20T10:00:00"),
+                        null,
+                        "Rua da Praia",
+                        "456",
+                        "Casa 2",
+                        "Praia Grande",
+                        "Santos",
+                        "SP",
+                        "11015-000"
+                ))
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(UserResponseDto.class)
+                .returnResult().getResponseBody();
+
+        // Save Id to Compare in validations below
+        Long userId = userCreatedForTest.getId();
+
+        Void responseBody = testClient
+                .delete()
+                .uri("/api/users/" + userId)
+                .exchange()
+                .expectStatus().isNoContent()
+                .expectBody(Void.class)
+                .returnResult().getResponseBody();
+    }
+
+    @Test
+    public void deleteUser_WithNonExistentId_ReturnErrorMessageWithStatusCode404(){
+        ErrorMessage responseBody = testClient
+                .put()
+                .uri("/api/users/0")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(new UserUpdateDto(
+                        "João Silva Updated",
+                        LocalDateTime.parse("1990-02-20T10:00:00"),
+                        "Rua da Praia Updated",
+                        "456",
+                        "Casa 2 Updated",
+                        "Praia Grande Updated",
+                        "Santos Updated",
+                        "SP Updated",
+                        "11015-000 Updated"
+                ))
+                .exchange()
+                .expectStatus().isNotFound()
+                .expectBody(ErrorMessage.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
+        org.assertj.core.api.Assertions.assertThat(responseBody.getStatus()).isEqualTo(404);
+    }
+
+    @Test
+    public void getAllUsers_WithValidData_ReturnUserWithStatusCode200(){
+
+        // First insert one user
+        UserResponseDto UserCreatedForTest = testClient
+                .post()
+                .uri("/api/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(new UserCreateDto(
+                        "18954246079",
+                        "87654321",
+                        "João Silva",
+                        LocalDateTime.parse("1990-02-20T10:00:00"),
+                        null,
+                        "Rua da Praia",
+                        "456",
+                        "Casa 2",
+                        "Praia Grande",
+                        "Santos",
+                        "SP",
+                        "11015-000"
+                ))
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(UserResponseDto.class)
+                .returnResult().getResponseBody();
+
+        List<UserResponseDto> responseBody = testClient
+                .get()
+                .uri("/api/users")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBodyList(UserResponseDto.class)
+                .returnResult().getResponseBody();
+
+        org.assertj.core.api.Assertions.assertThat(responseBody).isNotNull();
     }
 
 }

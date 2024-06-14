@@ -90,9 +90,31 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "Atualizar um usuário", description = "Rota para atualizar um usuário existente",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Usuário atualizado com sucesso",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDto.class))),
+                    @ApiResponse(responseCode = "404", description = "Usuário não encontrado",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
+            })
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@PathVariable Long id,@RequestBody User user){
+    public ResponseEntity<UserResponseDto> update(@PathVariable Long id, @RequestBody @Valid User user) {
         User userSaved = userService.update(id, user);
-        return ResponseEntity.ok(userSaved);
+        return ResponseEntity.ok(UserMapper.toDto(userSaved));
     }
+
+    @Operation(summary = "Deletar um usuário", description = "Rota para deletar um usuário",
+            responses = {
+                    @ApiResponse(responseCode = "204", description = "Usuário deletado com sucesso",
+                            content=@Content(mediaType = "application/json", schema = @Schema(implementation = Void.class))),
+                    @ApiResponse(responseCode = "404", description = "Usuário não encontrado",
+                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
+            })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        userService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 }

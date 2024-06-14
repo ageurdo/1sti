@@ -80,7 +80,7 @@
     
     *  [x] Rota - Todos usuários;
 
-    *  [ ] Rota - Atualizar usuário;
+    *  [x] Rota - Atualizar usuário;
     
     *  [x] Padronizar e tratar Exceções
 
@@ -102,6 +102,8 @@
     *  [x] Documentar Rota - Todos usuários;
     
     *  [x] Documentar Rota - Atualizar usuário;
+
+    *  [x] Documentar Rota - Deletar usuário;
         
 *   **[] 6: Implementação de testes**
     
@@ -115,9 +117,9 @@
 
     *  [x] GetUserById, com id existente e não existente;
     
-    *  [ ] GetAll;
+    *  [X] GetAll;
     
-    *  [ ] UpdateUser;
+    *  [X] UpdateUser;
 
 
 *   **[] 7: Implementação da camada de segurança**
