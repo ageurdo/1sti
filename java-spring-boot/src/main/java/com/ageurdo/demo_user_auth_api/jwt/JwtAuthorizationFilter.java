@@ -22,8 +22,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private JwtUserDetailsService detailsService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        final String token = request.getHeader(JwtUtils.JWT_AUTHORITIES); 
-
+        final String token = request.getHeader(JwtUtils.JWT_AUTHORITIES);
         if (token == null || token.startsWith(JwtUtils.JWT_BEARER)){
             log.info("Jwt Token está nulo, vazio ou não iniciado 'Bearer'.");
             filterChain.doFilter(request, response);

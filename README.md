@@ -128,7 +128,15 @@
         
     *  [x] Criar endpoints para autenticação
 
-    *  [ ] Implementar Auditoria
+    *  [x] Implementar Auditoria
+
+    *  Regras adicionais com base na Role (função)
+    
+    *  [x] Um usuário com a função "User" apenas consultará e alterará recursos pertencentes ao mesmo;
+    
+    *  [x] Um usuário com a função "Admin" consultará todos usuários da base, individualmente ou listando todos, mas só alterara os dados pertecentes a ele;
+
+    *  [x] Desbloquear rota do Swagger, bloqueada após implementação da autenticação;
 
         
 *   **[] 8: Entrega do código fonte**

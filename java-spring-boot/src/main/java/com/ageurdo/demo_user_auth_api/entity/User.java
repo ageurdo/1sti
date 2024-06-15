@@ -4,6 +4,11 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -12,6 +17,7 @@ import java.util.Objects;
 @Getter @Setter @NoArgsConstructor
 @Entity
 @Table(name = "users")
+@EntityListeners(AuditingEntityListener.class)
 public class User implements Serializable {
 
     @Id
@@ -58,15 +64,19 @@ public class User implements Serializable {
     @Column(nullable = false)
     private RecordStatus status;
 
+    @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @CreatedBy
     @Column(nullable = false, updatable = false)
     private String createdBy = "System";
 
+    @LastModifiedDate
     @Column(nullable = true)
     private LocalDateTime updatedAt;
 
+    @LastModifiedBy
     @Column(nullable = true)
     private String updatedBy;
 
