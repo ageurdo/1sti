@@ -117,17 +117,18 @@
 
     *  [x] GetUserById, com id existente e não existente;
     
-    *  [X] GetAll;
+    *  [x] GetAll;
     
-    *  [X] UpdateUser;
+    *  [x] UpdateUser;
 
 
 *   **[] 7: Implementação da camada de segurança**
     
-    *   Implementar a camada de segurança utilizando o padrão de projeto JWT
+    *  [x] Implementar a camada de segurança utilizando o padrão de projeto JWT
         
-    *   Criar endpoints para autenticação e autorização
-        
+    *  [x] Criar endpoints para autenticação
+
+    *  [ ] Implementar Auditoria
 
         
 *   **[] 8: Entrega do código fonte**

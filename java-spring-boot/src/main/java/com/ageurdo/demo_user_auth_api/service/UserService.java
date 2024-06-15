@@ -7,6 +7,7 @@ import com.ageurdo.demo_user_auth_api.exception.PasswordException;
 import com.ageurdo.demo_user_auth_api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,13 +16,16 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class userService {
+public class
+UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public User create(User user) {
         try {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             return userRepository.save(user);
         }
         catch (DataIntegrityViolationException ex) {
@@ -40,12 +44,21 @@ public class userService {
     @Transactional
     public User changePassword(Long id, String currentPassword, String newPassword, String confirmPassword) {
         try {
+            if (!newPassword.equals(confirmPassword)) {
+                throw new PasswordException("Nova senha não é igual a confirmação de senha");
+            }
+
             User user = getById(id);
 
-            validateCurrentPassword(user, currentPassword);
-            validateNewPassword(id, newPassword, confirmPassword);
+            if (passwordEncoder.matches(newPassword, user.getPassword())) {
+                throw new PasswordException("Escolha uma senha diferente da atual");
+            }
 
-            user.setPassword(newPassword);
+            if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+                throw new PasswordException("Sua senha está incorreta");
+            }
+
+            user.setPassword(passwordEncoder.encode(newPassword));
             return user;
         }
 
@@ -92,19 +105,18 @@ public class userService {
         User user = getById(id);
         userRepository.delete(user);
     }
-
-    private void validateCurrentPassword(User user, String currentPassword) {
-        if (!user.getPassword().equals(currentPassword)) {
-            throw new PasswordException("Sua senha está incorreta");
-        }
+    @Transactional(readOnly = true)
+    public User getByCpf(String cpf) {
+         return userRepository.getByCpf(cpf).orElseThrow(
+                () -> new EntityNotFoundException(String.format("Usuário com cpf=%s não encontrado", cpf))
+        );
     }
-    private void validateNewPassword(Long id, String newPassword, String confirmPassword) {
-        if (!newPassword.equals(confirmPassword)) {
-            throw new PasswordException("Nova senha não é igual a confirmação de senha");
-        }
 
-        if (newPassword.equals(getById(id).getPassword())) {
-            throw new PasswordException("Escolha uma senha diferente da atual");
-        }
+    @Transactional(readOnly = true)
+    public User.Role getRoleByCpf(String cpf) {
+        return userRepository.getRoleByCpf(cpf);
     }
+
+
+
 }

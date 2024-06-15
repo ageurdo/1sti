@@ -2,6 +2,7 @@ package com.ageurdo.demo_user_auth_api.web.controller;
 
 import com.ageurdo.demo_user_auth_api.entity.User;
 import com.ageurdo.demo_user_auth_api.repository.UserRepository;
+import com.ageurdo.demo_user_auth_api.service.UserService;
 import com.ageurdo.demo_user_auth_api.web.dto.UserCreateDto;
 import com.ageurdo.demo_user_auth_api.web.dto.UserPasswordDto;
 import com.ageurdo.demo_user_auth_api.web.dto.UserResponseDto;
@@ -26,7 +27,7 @@ import java.util.List;
 public class UserController {
 
     private final UserRepository userRepository;
-    private final com.ageurdo.demo_user_auth_api.service.userService userService;
+    private final UserService userService;
 
     @Operation(summary = "Criar um novo usuário", description = "Rota para criar um novo usuário",
             responses = {

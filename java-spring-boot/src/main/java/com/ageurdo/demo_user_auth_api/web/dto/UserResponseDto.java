@@ -1,5 +1,6 @@
 package com.ageurdo.demo_user_auth_api.web.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ public class UserResponseDto {
     private String cpf;
     private String role;
     private String name;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dateOfBirth;
     private String street;
     private String number;
