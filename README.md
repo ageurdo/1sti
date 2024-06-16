@@ -66,7 +66,7 @@
 
     *   Criar endpoints para realizar operações de cadastro de usuários
 
-*   **[] 4: Implementação da lógica de negócios**
+*   **[X] 4: Implementação da lógica de negócio**
     
     *   Implementar a lógica de negócios para a entidade Usuário
 
@@ -94,7 +94,7 @@
 
 
 
-*   **[] 5: Documentar API**
+*   **[X] 5: Documentar API**
     
     *  [x] Adicionar SpringDoc
         
@@ -110,7 +110,7 @@
 
     *  [x] Documentar Rota - Deletar usuário;
         
-*   **[] 6: Implementação de testes**
+*   **[X] 6: Implementação de testes**
     
     *   Criar testes para a aplicação utilizando frameworks de teste adequados
         
@@ -130,7 +130,7 @@
 
 
 
-*   **[] 7: Implementação da camada de segurança**
+*   **[X] 7: Implementação da camada de segurança**
     
     *  [x] Implementar a camada de segurança utilizando o padrão de projeto JWT
         
@@ -150,8 +150,10 @@
 
 
         
-*   **[] 8: Entrega do código fonte**
+*   **[ ] 8: Entrega do código fonte**
     
+    *   [x] Criar instruções para iniciar ambiente
+
     *   Entregar o código fonte em um repositório Git público
         
     *   Incluir instruções claras para montar o ambiente, rodar os testes e rodar a aplicação
@@ -176,20 +178,24 @@
     
 *   \[Commit 2: Definição do modelo de dados\](link para o commit)
     
-*   \[Commit 3: Implementação da camada de segurança\](link para o commit)
+*   \[Commit 3: Implementação da camada de persistência\](link para o commit)
     
-*   \[Commit 4: Implementação da camada de persistência\](link para o commit)
+*   \[Commit 4: Implementação da lógica de negócio\](link para o commit)    
     
-*   \[Commit 5: Implementação da lógica de negócios\](link para o commit)
-    
+*   \[Commit 5: Documentar API\](link para o commit)
+
 *   \[Commit 6: Implementação de testes\](link para o commit)
-    
-*   \[Commit 7: Entrega do código fonte\](link para o commit)
+
+*   \[Commit 7: Implementação da camada de segurança\](link para o commit)
     
 
 **Instruções para montar o ambiente**
 
 *   \[Instruções para montar o ambiente\](link para as instruções)
+    
+*   **1: Na raiz do projeto há um docker-compose.yml**
+*   **2: Na pasta /instructions há uma query para criar o banco, usuário para o banco, atribuição de privilégios e inserção do primeiro usuário com role 'ADMIN'**
+    ![Connection Instructions](/instructions/connection.png)
     
 
 **Instruções para rodar os testes**
