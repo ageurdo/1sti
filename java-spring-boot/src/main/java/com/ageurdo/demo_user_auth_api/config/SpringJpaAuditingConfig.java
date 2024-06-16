@@ -11,12 +11,15 @@ import java.util.Optional;
 @EnableJpaAuditing
 @Configuration
 public class SpringJpaAuditingConfig implements AuditorAware<String> {
+
     @Override
     public Optional<String> getCurrentAuditor() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         if (authentication != null && authentication.isAuthenticated()){
             return Optional.of(authentication.getName()); //getName aqui é padrão da interface, mas o cpf será retornado
         }
+
         return null;
     }
 }

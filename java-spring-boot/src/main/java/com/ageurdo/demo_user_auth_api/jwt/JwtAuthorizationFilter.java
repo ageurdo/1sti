@@ -17,14 +17,19 @@ import java.io.IOException;
 
 @Slf4j
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
-
     @Autowired
     private JwtUserDetailsService detailsService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String token = request.getHeader(JwtUtils.JWT_AUTHORITIES);
-        if (token == null || token.startsWith(JwtUtils.JWT_BEARER)){
-            log.info("Jwt Token está nulo, vazio ou não iniciado 'Bearer'.");
+//        if (token == null || token.startsWith(JwtUtils.JWT_BEARER)){
+//            log.info("Jwt Token está nulo, vazio ou não iniciado 'Bearer'.");
+//            filterChain.doFilter(request, response);
+//            return;
+//        }
+//
+        if (token == null){
+            log.info("Jwt Token está nulo.");
             filterChain.doFilter(request, response);
             return;
         }
@@ -33,6 +38,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+        log.info("Jwt Token: {}", token);
         String cpf = JwtUtils.getCpfFromToken(token);
         toAuthentication(request, cpf);
 

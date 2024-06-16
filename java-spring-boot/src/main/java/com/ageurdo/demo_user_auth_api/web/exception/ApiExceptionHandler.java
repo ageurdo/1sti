@@ -92,6 +92,7 @@ public class ApiExceptionHandler {
                 .body(new ErrorMessage(request, HttpStatus.BAD_REQUEST, ex.getMessage()));
     }
 
+
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<ErrorMessage> httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex, HttpServletRequest request) {
         log.error("Api Error", ex);

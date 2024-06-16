@@ -87,6 +87,11 @@
     *  [x] Padronizar exceções de atualizar senha
 
     *  [x] Padronizar excessão de Bad Request e Method Not Allowed...
+    
+    *  [ ] Auth - Validar se usuário que vai autenticar esta deletado;
+
+    *  [ ] Delete - Capturar dados do usuário que esta fazendo request para anotar no deleteBy;
+
 
 
 *   **[] 5: Documentar API**
@@ -121,6 +126,9 @@
     
     *  [x] UpdateUser;
 
+    *  [x] Incluir nos testes autenticação para as rotas necessárias;
+
+
 
 *   **[] 7: Implementação da camada de segurança**
     
@@ -136,7 +144,10 @@
     
     *  [x] Um usuário com a função "Admin" consultará todos usuários da base, individualmente ou listando todos, mas só alterara os dados pertecentes a ele;
 
-    *  [x] Desbloquear rota do Swagger, bloqueada após implementação da autenticação;
+    *  [x] Desbloquear rota do Swagger, bloqueada após implementação da autenticação;    
+    
+    *  [ ] Quando o usuário for excluído atualizar campos virtais e soft delete na mão (Campo status)
+
 
         
 *   **[] 8: Entrega do código fonte**

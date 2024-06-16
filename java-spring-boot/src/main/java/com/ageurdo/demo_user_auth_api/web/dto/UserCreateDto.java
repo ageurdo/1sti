@@ -1,4 +1,5 @@
 package com.ageurdo.demo_user_auth_api.web.dto;
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
@@ -50,16 +51,13 @@ public class UserCreateDto {
     @NotBlank
     private String zipCode;
 
-//    private LocalDateTime createdAt;
-//
+//    @Nullable
 //    private String createdBy;
-//
+
+//    private LocalDateTime createdAt;
 //    private LocalDateTime updatedAt;
-//
 //    private String updatedBy;
-//
 //    private LocalDateTime deletedAt;
-//
 //    private String deletedBy;
 
 }

@@ -7,6 +7,7 @@ import com.ageurdo.demo_user_auth_api.exception.PasswordException;
 import com.ageurdo.demo_user_auth_api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,7 @@ UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
+    AuthenticationPrincipal authenticationPrincipal;
     @Transactional
     public User create(User user) {
         try {
@@ -31,7 +32,6 @@ UserService {
         catch (DataIntegrityViolationException ex) {
             throw new CpfUniqueViolationException(String.format("CPF {%s} já cadastrado", user.getCpf()));
         }
-
     }
 
     @Transactional(readOnly = true)
@@ -102,8 +102,24 @@ UserService {
 
     @Transactional
     public void deleteById(Long id) {
-        User user = getById(id);
-        userRepository.delete(user);
+        try{
+            String userLogged = ""; //authenticationPrincipal.getClass().getName();
+            User user = getById(id);
+
+            if (user.getRole() == User.Role.ROLE_ADMIN) {
+                throw new AccessDeniedException("Usuário administrador não pode ser removido");
+            }
+
+            user.setDeletedBy(userLogged);
+            user.setDeletedAt(LocalDateTime.now());
+            user.setStatus(User.RecordStatus.REMOVED);
+
+            return;
+        }
+        catch(RuntimeException ex){
+            throw new RuntimeException(ex.getMessage());
+        }
+
     }
     @Transactional(readOnly = true)
     public User getByCpf(String cpf) {

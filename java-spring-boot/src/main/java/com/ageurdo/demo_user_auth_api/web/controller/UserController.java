@@ -31,6 +31,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserService userService;
 
+
     @Operation(summary = "Criar um novo usuário", description = "Rota para criar um novo usuário",
             responses = {
                     @ApiResponse(responseCode = "201", description = "Recurso criado com sucesso",
@@ -71,8 +72,6 @@ public class UserController {
                     @ApiResponse(responseCode = "400", description = "Senha não confere",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
                     @ApiResponse(responseCode = "403", description = "Usuário sem permissão para consultar este recurso",
-                            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
-                    @ApiResponse(responseCode = "404", description = "Recurso não encontrado",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class))),
                     @ApiResponse(responseCode = "422", description = "Campos inválidos ou mal formatados",
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
@@ -133,7 +132,8 @@ public class UserController {
                             content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorMessage.class)))
             })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','USER') and (#id == authentication.principal.id)")
+    @PreAuthorize("hasRole('ADMIN') or " +
+            "(hasRole('USER') and (#id == authentication.principal.id))")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         userService.deleteById(id);
         return ResponseEntity.noContent().build();
