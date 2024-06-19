@@ -8,6 +8,7 @@ import com.ageurdo.demo_user_auth_api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -123,9 +124,15 @@ UserService {
     }
     @Transactional(readOnly = true)
     public User getByCpf(String cpf) {
-         return userRepository.getByCpf(cpf).orElseThrow(
+        User user = userRepository.getByCpf(cpf).orElseThrow(
                 () -> new EntityNotFoundException(String.format("Usuário com cpf=%s não encontrado", cpf))
         );
+
+        if (user.getStatus() == User.RecordStatus.REMOVED) {
+            throw new EntityNotFoundException("Usuário inativo");
+        }
+
+        return user;
     }
 
     @Transactional(readOnly = true)
